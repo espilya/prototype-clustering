@@ -36,7 +36,7 @@ class SimilarityCommunityDetection:
             Dictionary with all elements and its corresponding community.
         """
         if metric in SKLEARN_METRICS:
-            alg = AgglomerativeClustering(n_clusters=n_clusters, affinity=metric)
+            alg = AgglomerativeClustering(n_clusters=n_clusters, affinity=metric, linkage='average')
             result = alg.fit_predict(self.data.values)
         else:
             alg = AgglomerativeClustering(n_clusters=n_clusters, affinity='precomputed', linkage='average')
