@@ -48,7 +48,7 @@ class ExplainedCommunitiesDetection:
             self.communities = complete_data.groupby(by='community')
             for c in range(n_communities):
                 community = self.communities.get_group(c)
-                explainables.append(self.is_explainable(community, answer_binary))
+                explainables.append(self.is_explainable(community, answer_binary, percentage))
 
             finish_search = sum(explainables) == n_communities
 
@@ -57,7 +57,7 @@ class ExplainedCommunitiesDetection:
 
         return n_communities, result
 
-    def get_community(self, id_community, answer_binary=False):
+    def get_community(self, id_community, answer_binary=False, percentage=1.0):
         """Method to obtain all information about a community.
 
         Args:
@@ -77,6 +77,7 @@ class ExplainedCommunitiesDetection:
 
 
         community_data = {'name': id_community}
+        community_data['percentage'] = percentage
         community_data['members'] = list(community.index.values)
 
         community_data['properties'] = dict()       
@@ -84,7 +85,7 @@ class ExplainedCommunitiesDetection:
         for col in community.columns.values:
             if col != 'community':
                 if answer_binary:
-                    if len(community[col]) == community[col].sum():
+                    if (len(community[col]) * percentage) <= community[col].sum():
                         community_data['properties'][col] = community[col].value_counts().index[0]
                         # print('-', col, community[col].value_counts().index[0])
                 else:
@@ -94,14 +95,14 @@ class ExplainedCommunitiesDetection:
 
         return community_data
 
-    def is_explainable(self, community, answer_binary=False):
+    def is_explainable(self, community, answer_binary=False, percentage=1.0):
         explainable_community = False
 
         for col in community.columns.values:
             if col != 'community':
                 if answer_binary:
-                    explainable_community |= len(community[col]) == community[col].sum()
+                    explainable_community |= (len(community[col]) * percentage)  <= community[col].sum()
                 else:
-                    explainable_community |= len(community[col].value_counts()) == 1
+                    explainable_community |= (len(community[col]) * percentage) <= community[col].value_counts().max()
         
         return explainable_community
