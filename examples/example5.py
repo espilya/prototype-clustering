@@ -60,7 +60,7 @@ def main():
     n_communities, users_communities = community_detection.search_all_communities(percentage=0.5)
 
     for c in range(n_communities):
-        community_data = community_detection.get_community(c)
+        community_data = community_detection.get_community(c, percentage=0.5)
         print(community_data)
 
 
