@@ -89,7 +89,8 @@ class ExplainedCommunitiesDetection:
                         community_data['properties'][col] = community[col].value_counts().index[0]
                         # print('-', col, community[col].value_counts().index[0])
                 else:
-                    if len(community[col].value_counts()) == 1:
+                    
+                    if (len(community[col]) * percentage) <= community[col].value_counts().max():
                         community_data['properties'][col] = community[col].value_counts().index[0]
                         # print('-', col, community[col].value_counts().index[0])
 
