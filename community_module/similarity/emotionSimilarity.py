@@ -4,9 +4,11 @@
 from itertools import product
 import numpy as np
 
+from community_module.similarity.similarity import Similarity
+
 PLUTCHIK_EMOTIONS = ['anger', 'anticipation', 'disgust', 'fear', 'sadness', 'surprise', 'trust'] # Falta incluir 'joy'
 
-class EmotionSimilarity:
+class EmotionSimilarity(Similarity):
 
     def __init__(self, data):
         """Construct of EmotionSimilarity objects.

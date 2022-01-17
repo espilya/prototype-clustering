@@ -5,7 +5,7 @@ class GephiVisualization:
     def __init__(self, hostname='localhost', port=8080, workspace='workspace0'):
         self.stream = streamer.Streamer(streamer.GephiWS(hostname=hostname, port=port, workspace=workspace))
 
-    def load_community(self, users, distances, users_properties):
+    def load_community(self, users, distances, users_properties=None):
         """Method to visualizate communities by users in Gephi.
 
         Args:
@@ -20,8 +20,9 @@ class GephiVisualization:
         for u in users:
             node = graph.Node(u[0], size=100)
 
-            for i in range(1, len(u)):
-                node.property[users_properties[i-1]] = u[i]
+            if users_properties != None:
+                for i in range(1, len(u)):
+                    node.property[users_properties[i-1]] = u[i]
 
             self.nodes[u[0]] = node
             self.stream.add_node(node)
@@ -50,5 +51,3 @@ class GephiVisualization:
 
         self.edges.clear()
         self.nodes.clear()
-
-

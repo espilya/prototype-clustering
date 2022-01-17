@@ -40,7 +40,7 @@ class Similarity:
         """
         pass
 
-    def matrix_distance():
+    def matrix_distance(self):
         """Method to calculate the matrix of distance between all element included in data.
 
         Returns
@@ -50,7 +50,7 @@ class Similarity:
         """
         pass
 
-    def matrix_similarity():
+    def matrix_similarity(self):
         """Method to calculate the matrix of similarity between all element included in data.
 
         Returns
