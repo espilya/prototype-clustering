@@ -1,4 +1,6 @@
-# Community Module
+# Prototype Clustering Techniques
+
+This repository contains several prototypes that use different similarity metrics and clustering techniques on different SPICE case studies.
 
 ## Examples
 
