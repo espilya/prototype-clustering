@@ -1,12 +1,27 @@
 # Authors: Guillermo Jimenez-Díaz
 #          Jose Luis Jorro-Aragoneses
+#          José Ángel Sánchez Martín
+
+from itertools import product
+import numpy as np
 
 class Similarity:
     """Class to define the functions to be implemented to calculate
     the similarity between elements.
     """
+    
+    def __init__(self,data):
+        """Construct of Similarity objects.
 
-    def distance(elemA, elemB):
+        Parameters
+        ----------
+        data : pd.DataFrame
+            Dataframe where index is ids of elements
+        
+        """
+        self.data = data
+
+    def distance(self,elemA, elemB):
         """Method to obtain the distance between two element.
 
         Parameters
@@ -23,7 +38,7 @@ class Similarity:
         """
         pass
 
-    def similarity(elemA, elemB):
+    def similarity(self,elemA, elemB):
         """Method to obtain the similarity between two element.
 
         Parameters
@@ -48,7 +63,15 @@ class Similarity:
         np.array
             Matrix that contains all similarity values.
         """
-        pass
+        users = self.data.index
+        pairs = product(range(len(users)), repeat=2)
+
+        matrix = np.zeros((len(users), len(users)))
+        for p in pairs:
+            dist = self.distance(users[p[0]], users[p[1]])
+            matrix[p[0], p[1]] = dist
+
+        return matrix
 
     def matrix_similarity(self):
         """Method to calculate the matrix of similarity between all element included in data.
@@ -58,4 +81,14 @@ class Similarity:
         np.array
             Matrix that contains all similarity values.
         """
-        pass
+        users = self.data.index
+        pairs = product(range(len(users)), repeat=2)
+
+        matrix = np.zeros((len(users), len(users)))
+        for p in pairs:
+            dist = self.similarity(users[p[0]], users[p[1]])
+            matrix[p[0], p[1]] = dist
+
+        return matrix
+    
+    
