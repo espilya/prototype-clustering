@@ -22,7 +22,8 @@ def main():
     elif(file_extension == ".json"):
         data = DAO_json(route).readData()
     elif(file_extension == ".api"):
-        pass #data = DAO_api(route).readData()
+        data = DAO_api(route).readData()
+        data = DAO_api(route).readUserGeneratedContent(44)
     elif(file_extension == ".linkedDataHub"):
         data = DAO_linkedDataHub(route).readData()
     else:

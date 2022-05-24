@@ -33,8 +33,6 @@ class DAO():
 
     def jsonToPandasDataframe(self, json):
         """
-        Method to get user generated content.
-
             Parameters
             ----------
                 json: json document
@@ -45,77 +43,3 @@ class DAO():
         pass
 
     
-
-    """
-        The methods below deal with mongoDB queries in the case of the API.
-    """
-        
-    def readUserGeneratedContents(self):
-        """
-        Method to get all user generated content.
-
-            Parameters
-            ----------
-
-            Returns
-            -------
-            json document
-        """
-        pass
-        
-    def readUserGeneratedContent(self,id):
-        """
-        Method to get all user generated content.
-
-            Parameters
-            ----------
-                id: str
-                    user identifier
-
-            Returns
-            -------
-            json document
-        """
-        pass
-        
-    def saveUserGeneratedContent(self, user):
-        """
-        Method to get user generated content.
-
-            Parameters
-            ----------
-                user: json document
-            Returns
-            -------
-                
-        """   
-        pass    
-    
-    def updateUserGeneratedContent(self, id, user):
-        """
-        Method to get user generated content.
-
-            Parameters
-            ----------
-                id: str
-                    user identifier
-                user: json document
-            Returns
-            -------
-               
-        """   
-        pass
-        
-    def deleteUserGeneratedContent(self, id):
-        """
-        Method to get user generated content.
-
-            Parameters
-            ----------
-                id: str
-                    user identifier
-            Returns
-            -------
-              
-        """   
-        pass 
