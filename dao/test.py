@@ -14,7 +14,7 @@ def main():
     route3 = r"a.api"
     route4 = r"a.linkedDataHub"
 
-    route = route2
+    route = route3
 
     filename, file_extension = os.path.splitext(route)
     if(file_extension == ".csv"):
@@ -22,8 +22,8 @@ def main():
     elif(file_extension == ".json"):
         data = DAO_json(route).getData()
     elif(file_extension == ".api"):
-        data = DAO_api(route).getData()
-        data = DAO_api(route).readUserGeneratedContents()
+        #data = DAO_api(route).getData()
+        data = DAO_api(route).communityList()
     elif(file_extension == ".linkedDataHub"):
         data = DAO_linkedDataHub("https://api2.mksmart.org/object/89b71c31-4bd3-44ad-9573-420e6320e945").getData()
     else:

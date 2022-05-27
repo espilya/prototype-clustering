@@ -8,44 +8,47 @@ class DAO_api(DAO):
 
     def __init__(self,route):
         super().__init__(route)
+        #self.route = route
     
-    def extractData(self):
-        uuid = "xxx-xxx-xxx"
-        response = requests.get("http://spice.fdi.ucm.es/v1.1/communities")
+    def getData(self):
+        raise ValueError('Incorrect operation. Please use a specific method for the API request')
+
+    def responseProcessing(self, response):
+        """Process response from API"""
         print("status_code", response.status_code)
+        if(response.status_code == 400):
+            return
         self.data = response.json()
         self.data = json.dumps(self.data, sort_keys=True, indent=4)
 
-
+    """__API for users__"""
+    def userCommunities(self, userId):
+        response = requests.get("http://spice.fdi.ucm.es/v1.1/users/{}/communities".format(userId))
+        self.responseProcessing(response)
+        return self.data
     
+        # "Update community model with new user generated content"
+        # tambien se puede llamar como updateUGC
+    def updateUser(self, userId, ugc): 
+        response = requests.post("http://spice.fdi.ucm.es/v1.1/users/{}/update-generated-content".format(userId), data=ugc)
+        self.responseProcessing(response)
+        return self.data
     
 
-    def readUserGeneratedContents(self):
+
+    """__API for communities__"""
+    def communityList(self):
         response = requests.get("http://spice.fdi.ucm.es/v1.1/communities")
-        print("status_code", response.status_code)
-        self.data = response.json()
-        self.data = json.dumps(self.data, sort_keys=True, indent=4)
+        self.responseProcessing(response)
         return self.data
         
-    def readUserGeneratedContent(self, id):
-        response = requests.get("http://spice.fdi.ucm.es/v1.1/users/{}/communities".format(id))
-        print("status_code", response.status_code)
-        self.dataUGC = response.json()
-        self.dataUGC = json.dumps(self.dataUGC, sort_keys=True, indent=4)
-        return self.dataUGC
-        
-    def saveUserGeneratedContent(self, user):
-        response = requests.post("", data=user)
-        print("status_code", response.status_code)
+    def communityDescription(self, communityId):
+        response = requests.get("http://spice.fdi.ucm.es/v1.1/communities/{}".format(communityId))
+        self.responseProcessing(response)
+        return self.data
       
-    
-    def updateUserGeneratedContent(self, id, user): 
-        response = requests.post("http://spice.fdi.ucm.es/v1.1/users/{}/update-generated-content".format(id), data=user)
-        print("status_code", response.status_code)
-  
-        
-    def deleteUserGeneratedContent(self, id):  
-        response = requests.post()
-        print("status_code", response.status_code)
-
+    def communityUsers(self, communityId): 
+        response = requests.get("http://spice.fdi.ucm.es/v1.1/communities/{}/users".format(communityId))
+        self.responseProcessing(response)
+        return self.data
 
