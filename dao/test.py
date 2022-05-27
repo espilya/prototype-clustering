@@ -10,22 +10,22 @@ from dao_linkedDataHub import DAO_linkedDataHub
 def main():
     
     route1 = r"data\IMMA\citizenInteractions.csv"
-    route2 = r"data\MNCN\Sessions\sesion_jueves_11.json"
+    route2 = r"data\IMMA\artworks_IMMA.json"
     route3 = r"a.api"
     route4 = r"a.linkedDataHub"
 
-    route = route3
+    route = route2
 
     filename, file_extension = os.path.splitext(route)
     if(file_extension == ".csv"):
-        data = DAO_csv(route).readData()
+        data = DAO_csv(route).getData()
     elif(file_extension == ".json"):
-        data = DAO_json(route).readData()
+        data = DAO_json(route).getData()
     elif(file_extension == ".api"):
-        data = DAO_api(route).readData()
-        data = DAO_api(route).readUserGeneratedContent(44)
+        data = DAO_api(route).getData()
+        data = DAO_api(route).readUserGeneratedContents()
     elif(file_extension == ".linkedDataHub"):
-        data = DAO_linkedDataHub(route).readData()
+        data = DAO_linkedDataHub("https://api2.mksmart.org/object/89b71c31-4bd3-44ad-9573-420e6320e945").getData()
     else:
         data = "error"
 

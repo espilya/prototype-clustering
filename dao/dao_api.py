@@ -9,7 +9,7 @@ class DAO_api(DAO):
     def __init__(self,route):
         super().__init__(route)
     
-    def getData(self):
+    def extractData(self):
         uuid = "xxx-xxx-xxx"
         response = requests.get("http://spice.fdi.ucm.es/v1.1/communities")
         print("status_code", response.status_code)
@@ -17,25 +17,10 @@ class DAO_api(DAO):
         self.data = json.dumps(self.data, sort_keys=True, indent=4)
 
 
-    def readData(self):
-        try:
-            return self.data
-        except AttributeError:
-            self.getData()
-            return self.data
     
-    """
-        The methods below deal with mongoDB queries in the case of the API.
-    """
+    
+
     def readUserGeneratedContents(self):
-        """
-        Method to get all user generated content.
-            Parameters
-            ----------
-            Returns
-            -------
-            json document
-        """
         response = requests.get("http://spice.fdi.ucm.es/v1.1/communities")
         print("status_code", response.status_code)
         self.data = response.json()
