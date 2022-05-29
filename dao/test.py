@@ -1,5 +1,7 @@
+import re
 from dao import DAO
 import os
+from dao_db import DAO_db
 from dao_csv import DAO_csv
 from dao_json import DAO_json
 from dao_api import DAO_api
@@ -8,13 +10,30 @@ from dao_linkedDataHub import DAO_linkedDataHub
 
 
 def main():
-    
+
     route1 = r"data\IMMA\citizenInteractions.csv"
     route2 = r"data\IMMA\artworks_IMMA.json"
     route3 = r"a.api"
     route4 = r"a.linkedDataHub"
+    route5 = r"db"
 
-    route = route3
+    route = route5
+
+    dao = DAO_db(route)
+    data = {"id": "001"}
+    dao.add(data)
+    data = {"id": "002"}
+    dao.add(data)
+    print(dao.readAll())
+    print(dao.read("001"))
+
+    newvalues = { "$set": { 'id': "009" } }
+    print(dao.update("001", newvalues))
+    print(dao.read("009"))
+
+    dao.close()
+
+    return ""
 
     filename, file_extension = os.path.splitext(route)
     if(file_extension == ".csv"):
