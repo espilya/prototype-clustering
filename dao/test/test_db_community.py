@@ -11,7 +11,7 @@ from dao_db_community import DAO_db_community
 
 
 
-class Test(unittest.TestCase):
+class Test_community(unittest.TestCase):
 
     def test_db_community(self):
         pass

@@ -18,7 +18,7 @@ def validateJSON(jsonData):
         return False
     return True
 
-class Test(unittest.TestCase):
+class Test_file(unittest.TestCase):
 
     def test_json(self):
         route = r"data\MNCN\Sessions\sesion_jueves_11.json"

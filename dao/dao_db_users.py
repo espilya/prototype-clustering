@@ -1,11 +1,10 @@
-import json
-from bson.json_util import dumps
+
+from bson.json_util import dumps, loads 
 
 from dao import DAO
 
 import pymongo
 from pymongo import MongoClient
-
 
 class DAO_db_users(DAO):
 
@@ -17,13 +16,20 @@ class DAO_db_users(DAO):
     def getData(self):
         raise ValueError('Incorrect operation. Please use a specific method for the API request')
 
+    
     def readUsers(self):
-        data = self.db_users.find()
-        return dumps(list(data))
+        """devuelve un list de dict's"""
+        data = self.db_users.find({},{"_id":0})
+        data = loads(dumps(list(data)))
+        return data
 
     def readUser(self, id):
-        data = self.db_users.find({"id": id})
-        return dumps(list(data))
+        """devuelve un dict"""
+        data = self.db_users.find({"id": id}, {"_id":0})
+        data = loads(dumps(list(data)))
+        if len(data)==0: 
+            return {}
+        return data[0]
 
     def updateId(self, userId, newValue):
         response = self.db_users.update_one(
@@ -41,10 +47,13 @@ class DAO_db_users(DAO):
         return response
          
     def add(self, user):
+        """recibe un json string"""
+        user = loads(user)
         response = self.db_users.insert_one(user)
         return response
 
-    def close(self):
-        self.mongo.close()
+
+    def drop(self):
+        self.db_users.drop()
 
 

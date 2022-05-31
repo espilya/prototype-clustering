@@ -1,6 +1,7 @@
 import re
 from dao import DAO
 import os
+from dao_db_users import DAO_db_users
 
 from dao_csv import DAO_csv
 from dao_json import DAO_json
@@ -13,21 +14,40 @@ from requests.auth import HTTPBasicAuth
 
 def main():
 
-    userId = 23
-    data = {
-                "id": 23,
-                "userid": 23,
-                "origin": "90e6d701748f08514b01",
-                "source_id": "90e6d701748f08514b01",
-                "source": "Content description",
-                "pname": "DemographicGender",
-                "pvalue": "F (for Female value)",
-                "context": "application P:DemographicsPrep",
-                "datapoints": 0
-            }
-    # data = json.dumps(data, ensure_ascii=True, sort_keys=True)
-    response = requests.post("http://spice.fdi.ucm.es/v1.1/users/23/update-generated-content", json=data)
-    print(response.status_code)
+    dao = DAO_db_users()
+    data = {"id": "001"}
+    d= dao.add(data)
+    print(d)
+    print(dir(d))
+    print(d.acknowledged)
+    d = dao.readUser("004")
+    print(d)
+    data = {"id": "002"}
+    dao.add(data)
+    # print(dao.readAll())
+    # print(dao.read("001"))
+
+    newvalues = { "$set": { 'id': "009" } }
+    # print(dao.update("001", newvalues))
+    # print(dao.read("009"))
+
+    dao.close()
+
+    # userId = 23
+    # data = {
+    #             "id": 23,
+    #             "userid": 23,
+    #             "origin": "90e6d701748f08514b01",
+    #             "source_id": "90e6d701748f08514b01",
+    #             "source": "Content description",
+    #             "pname": "DemographicGender",
+    #             "pvalue": "F (for Female value)",
+    #             "context": "application P:DemographicsPrep",
+    #             "datapoints": 0
+    #         }
+    # # data = json.dumps(data, ensure_ascii=True, sort_keys=True)
+    # response = requests.post("http://spice.fdi.ucm.es/v1.1/users/23/update-generated-content", json=data)
+    # print(response.status_code)
     
     return
     route1 = r"data\IMMA\citizenInteractions.csv"

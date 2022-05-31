@@ -7,39 +7,65 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
 from dao_db_users import DAO_db_users
+from bson.json_util import dumps, loads 
 
 
-
-class Test(unittest.TestCase):
+class Test_db_users(unittest.TestCase):
 
     def setUp(self):
         self.dao = DAO_db_users()
 
     def tearDown(self):
-        self.dao.close()
+        self.dao.drop()
 
-    def test_db_users(self):
-        dao = DAO_db_users()
-        data = {"id": "001"}
-        dao.add(data)
-        data = {"id": "002"}
-        dao.add(data)
-        print(dao.readAll())
-        print(dao.read("001"))
+    """
+    an'ade un usuario en la db y despues lo lee. 
+    despues compara el usuario que creo y el que recibio de la db
+    """
+    def test_addUser(self):
+        user = {
+                "id": "001",
+                "gender":"F",
+                "cars":["Ford", "BMW", "Fiat"]
+                }
+        self.dao.add(json.dumps(user))
+        response = self.dao.readUser("001")
+        self.assertEqual(response, user)
 
-        newvalues = { "$set": { 'id': "009" } }
-        print(dao.update("001", newvalues))
-        print(dao.read("009"))
+    """an'ade 2 usuarios, los lee y despues compara"""
+    def test_readUsers(self):
+        user1 = {"id": "001",}
+        user2 = {"id": "002",}
+        self.dao.add(json.dumps(user1))
+        self.dao.add(json.dumps(user2))
+        response = self.dao.readUsers()
+        self.assertEqual(response, [user1, user2])
 
-    def addUser(self):
-        data = {"id": "001"}
-        self.dao.add(data)
+    """
+    an'ade un usuario en la db, le cambia el id a '009' y despues lo lee.
+    al final compara el id del usuario recibido con el '009'
+    """
+    def test_updateId(self):
+        user = {
+                "id": "001"
+                }
+        self.dao.add(json.dumps(user))
+        self.dao.updateId("001", "009")
+        response = self.dao.readUser("009")
+        self.assertEqual(response.get("id"), "009")
 
-    def updateId(self):
-        pass
 
-    def deleteUser(self):
-        pass
+    """
+    an'ade un usuario en la db, lo elimina y lo intenta leer
+    """
+    def test_deleteUser(self):
+        user = {
+                "id": "001"
+                }
+        self.dao.add(json.dumps(user))
+        self.dao.deleteUser("001")
+        response = self.dao.readUser("001")
+        self.assertEqual(response, {})
 
 
 if __name__ == '__main__':
