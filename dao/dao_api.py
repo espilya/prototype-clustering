@@ -6,7 +6,7 @@ from requests.auth import HTTPBasicAuth
 
 class DAO_api(DAO):
 
-    def __init__(self,route):
+    def __init__(self, route=""):
         super().__init__(route)
         #self.route = route
     
@@ -15,7 +15,6 @@ class DAO_api(DAO):
 
     def responseProcessing(self, response):
         """Process response from API"""
-        print("status_code", response.status_code)
         if(response.status_code == 400):
             return
         self.data = response.json()
@@ -25,14 +24,15 @@ class DAO_api(DAO):
     def userCommunities(self, userId):
         response = requests.get("http://spice.fdi.ucm.es/v1.1/users/{}/communities".format(userId))
         self.responseProcessing(response)
-        return self.data
+        return self.data, response
     
         # "Update community model with new user generated content"
         # tambien se puede llamar como updateUGC
     def updateUser(self, userId, ugc): 
-        response = requests.post("http://spice.fdi.ucm.es/v1.1/users/{}/update-generated-content".format(userId), data=ugc)
+        response = requests.post("http://spice.fdi.ucm.es/v1.1/users/{}/update-generated-content".format(userId), json=ugc)
+        print("http://spice.fdi.ucm.es/v1.1/users/{}/update-generated-content".format(userId))
         self.responseProcessing(response)
-        return self.data
+        return self.data, response
     
 
 
@@ -40,15 +40,15 @@ class DAO_api(DAO):
     def communityList(self):
         response = requests.get("http://spice.fdi.ucm.es/v1.1/communities")
         self.responseProcessing(response)
-        return self.data
+        return self.data, response
         
     def communityDescription(self, communityId):
         response = requests.get("http://spice.fdi.ucm.es/v1.1/communities/{}".format(communityId))
         self.responseProcessing(response)
-        return self.data
+        return self.data, response
       
     def communityUsers(self, communityId): 
         response = requests.get("http://spice.fdi.ucm.es/v1.1/communities/{}/users".format(communityId))
         self.responseProcessing(response)
-        return self.data
+        return self.data, response
 

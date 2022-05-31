@@ -13,3 +13,4 @@ class DAO_json(DAO):
     def extractData(self):
         with open(self.route, 'r', encoding='utf8') as f:
             self.data = json.load(f)
+            self.data = json.dumps(self.data, sort_keys=True, indent=4)

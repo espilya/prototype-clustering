@@ -1,0 +1,46 @@
+import unittest
+import json
+
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+
+from dao_db_users import DAO_db_users
+
+
+
+class Test(unittest.TestCase):
+
+    def setUp(self):
+        self.dao = DAO_db_users()
+
+    def tearDown(self):
+        self.dao.close()
+
+    def test_db_users(self):
+        dao = DAO_db_users()
+        data = {"id": "001"}
+        dao.add(data)
+        data = {"id": "002"}
+        dao.add(data)
+        print(dao.readAll())
+        print(dao.read("001"))
+
+        newvalues = { "$set": { 'id': "009" } }
+        print(dao.update("001", newvalues))
+        print(dao.read("009"))
+
+    def addUser(self):
+        data = {"id": "001"}
+        self.dao.add(data)
+
+    def updateId(self):
+        pass
+
+    def deleteUser(self):
+        pass
+
+
+if __name__ == '__main__':
+    unittest.main()

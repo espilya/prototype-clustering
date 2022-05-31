@@ -1,6 +1,6 @@
-import pandas as pd
+import csv, json
+
 from dao import DAO
-import os
 
 
 
@@ -10,7 +10,15 @@ class DAO_csv(DAO):
         super().__init__(route)
 
     def extractData(self):
-        self.data = pd.read_csv(self.route)
+        self.data = []
+        with open(self.route) as csvFile:
+            csvReader = csv.DictReader(csvFile)
+            for rows in csvReader:
+                self.data.append(rows)
+        self.data = json.dumps(self.data, sort_keys=True, indent=4)
+    
+
+
         
         
         

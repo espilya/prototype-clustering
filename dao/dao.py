@@ -1,4 +1,4 @@
-
+import pandas as pd
 
 class DAO():
     def __init__(self, route):
@@ -16,6 +16,9 @@ class DAO():
 
     def getData(self):
         return self.data
+
+    def getPandasDataframe(self):
+        return pd.read_json(self.data)
     
     def jsonToPandasDataframe(self, json):
         """
@@ -26,6 +29,6 @@ class DAO():
             -------
                 Pandas Dataframe
         """   
-        pass
+        return pd.read_json(json)
 
     
