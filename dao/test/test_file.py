@@ -8,7 +8,7 @@ sys.path.append(parentdir)
 
 from dao_csv import DAO_csv
 from dao_json import DAO_json
-
+import pathlib
 
 
 def validateJSON(jsonData):
@@ -21,12 +21,13 @@ def validateJSON(jsonData):
 class Test_file(unittest.TestCase):
 
     def test_json(self):
-        route = r"data\MNCN\Sessions\sesion_jueves_11.json"
+        route = r"data/sesion_jueves_11.json"
         data = DAO_json(route).getData()
         self.assertTrue(validateJSON(data))
 
     def test_csv(self):
-        route = r"data\IMMA\citizenInteractions.csv"
+        route = r"data/semana_ciencia_2021.csv"
+        print(pathlib.Path().resolve())
         data = DAO_csv(route).getData()
         self.assertTrue(validateJSON(data))
 

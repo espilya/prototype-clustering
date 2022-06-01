@@ -20,15 +20,5 @@ class DAO():
     def getPandasDataframe(self):
         return pd.read_json(self.data)
     
-    def jsonToPandasDataframe(self, json):
-        """
-            Parameters
-            ----------
-                json: json document
-            Returns
-            -------
-                Pandas Dataframe
-        """   
-        return pd.read_json(json)
 
     

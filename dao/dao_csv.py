@@ -1,7 +1,11 @@
 import csv, json
 
-from dao import DAO
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
 
+from dao import DAO
 
 
 class DAO_csv(DAO):
